@@ -5,12 +5,12 @@ const Login = (props) => {
     return (
         <div className="container">
           <h1>Hello</h1>
-          <form className="form">
+          <form className="login-form">
             <Input type="text" placeholder="Username" />
             <Input type="text" placeholder="Password" />
-            <button type="submit" onClick={props.onLogin()}>Login</button>
+            <button type="submit" onClick={props.onLogin}>Login</button>
           </form>
-          <p>Register now</p>
+          <p onClick={props.onToggleReg}>Register now</p>
         </div>
     );
 }
