@@ -8,6 +8,7 @@
   }
   body {
     background: #eee;
+    background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
     padding: 0 16px;
   }
   
@@ -63,6 +64,7 @@
     float: right;
     margin-right: 10px;
     color: #f5ba13;
+    background-color: white;
     border: none;
     width: 36px;
     height: 36px;
@@ -86,8 +88,8 @@
     position: relative;
   }
   .login-form input {
-    border: 1px solid rgba(252, 252, 252, 0.4);
-    background-color: rgba(252, 252, 252, 0.2);
+    border: 3px solid rgba(252, 252, 252, 0.664);
+    background-color: rgba(252, 252, 252, 0);
     width: 250px;
     border-radius: 3px;
     font-family: "Source Sans Pro", sans-serif;
@@ -112,7 +114,7 @@
     font-size: 18px;
   }
 
-  .create-area-form {
+  form.create-note {
     position: relative;
     width: 480px;
     margin: 30px auto 20px auto;
@@ -122,8 +124,8 @@
     box-shadow: 0 1px 5px rgb(138, 137, 137);
   }
 
-  .create-area-form input,
-  .create-area-form textarea {
+  form.create-note input,
+  form.create-note textarea {
     width: 100%;
     border: none;
     padding: 4px;
@@ -133,7 +135,7 @@
     resize: none;
   }
 
-  .create-area-form button {
+  form.create-note button {
     position: absolute;
     right: 18px;
     bottom: -18px;

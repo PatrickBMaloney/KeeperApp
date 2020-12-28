@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import Zoom from '@material-ui/core/Zoom';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 const CreateArea = (props) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
     const [note, setNote] = useState({
         title: "",
         content: ""
@@ -15,7 +20,14 @@ const CreateArea = (props) => {
                 [name]: value
             };
         });
-    }
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            console.log('do validate')
+            submitNote(event);
+        }
+    };
 
     const submitNote = (event) => {
         props.onAdd(note);
@@ -24,23 +36,42 @@ const CreateArea = (props) => {
             content: ""
         });
         event.preventDefault();
-    }
+    };
+
+    const expand = () => {
+        setIsExpanded(true);
+    };
+
+    const collapse=(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+          // Not triggered when swapping focus between children
+          setIsExpanded(false);
+        }
+    };
 
     return (
         <div>
-            <form className="create-area-form">
+            <form className="create-note" onBlur={collapse}>
                 <input
                     name="title"
-                    placeholder="Title"
+                    placeholder={isExpanded ? "Title" : "Take a note..."}
                     value={note.title}
-                    onChange={handleChange} />
-                <textarea 
+                    autoComplete="off"
+                    onChange={handleChange}
+                    onClick={expand}
+                    onKeyDown={handleKeyDown} />
+                {isExpanded && <textarea 
                     name="content"
                     placeholder="Take a note..."
-                    rows="3"
+                    rows={3}
                     value={note.content}
-                    onChange={handleChange} />
-                <button onClick={submitNote}>Add</button>
+                    onChange={handleChange}
+                    onke />}
+                <Zoom in={isExpanded}>
+                    <Fab onClick={submitNote}>
+                        <AddIcon />
+                    </Fab>
+                </Zoom>
             </form>
         </div>
     );
