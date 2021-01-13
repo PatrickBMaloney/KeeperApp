@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note  from "./Note";
@@ -6,11 +7,33 @@ import Login from "./Login";
 import Register from "./Register";
 import CreateArea from "./CreateArea";
 import initialNotes from "../notes";
+import classes from "../styles.css";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegistered, setIsRegistered] = useState(true);
   const [notes, setNotes] = useState(initialNotes);
+
+  const callAPI = () => {
+    fetch("testAPI")
+      .then(res => res.json())
+      .then(notes => {
+
+        setNotes(notes);
+        if (notes.confirmation != 'success') {
+          throw new Error('Could not retrieve notes')
+          return
+        }
+      })
+      .catch(err => {
+        console.log('ERROR - ' + err.message);
+      })
+  }
+
+  useEffect(() => {
+    callAPI();
+  }, []);
+
 
   const loginUser = () => {
     setIsLoggedIn(true);
@@ -29,6 +52,12 @@ function App() {
     setNotes(prevNotes => {
         return [...prevNotes, newNote];
     })
+    axios
+        .post("testAPI", {newNote})
+        .then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
   }
 
   const deleteNote = (id) => {
@@ -37,6 +66,8 @@ function App() {
             return index !== id;
         })
     })
+    axios.post("testAPI/delete", {id})
+    callAPI();
   }
 
   return (
