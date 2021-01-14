@@ -10,49 +10,48 @@ const noteSchema = new mongoose.Schema ({
     content: String
 });
 
-const Fruit = mongoose.model("Note", noteSchema);
+const Note = mongoose.model("Note", noteSchema);
 
 const initialNotes = [
     {
-        key: 1,
         title: "Delegation",
         content:
             "Q. How many programmers does it take to change a light bulb? A. None – It’s a hardware problem"
     },
     {
-        key: 2,
         title: "Loops",
         content:
             "How to keep a programmer in the shower forever. Show him the shampoo bottle instructions: Lather. Rinse. Repeat."
     },
     {
-        key: 3,
         title: "Arrays",
         content:
             "Q. Why did the programmer quit his job? A. Because he didn't get arrays."
     },
     {
-        key: 4,
         title: "Hardware vs. Software",
         content:
             "What's the difference between hardware and software? You can hit your hardware with a hammer, but you can only curse at your software."
     }
 ];
 
-initialNotes.forEach(element => {
-    let note = new Fruit ({
-        title: "Apple",
-        content: "the apple is red"
-    });
-    note.save();
-});
-
-const note = new Fruit ({
+const note = new Note ({
     title: "Apple",
     content: "the apple is red"
 });
 
 // fruit.save();
+
+const newUser = (userName, password) => {
+    const Note = mongoose.model("Note", noteSchema);
+    initialNotes.forEach(element => {
+        let note = new Note ({
+            title: element.title,
+            content: element.content
+        });
+        note.save();
+    });
+}
 
 const deleteItem = (id) => {
     Note.findByIdAndRemove(id, function(err){
