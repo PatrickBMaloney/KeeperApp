@@ -35,10 +35,10 @@ const initialNotes = [
     }
 ];
 
-const note = new Note ({
-    title: "Apple",
-    content: "the apple is red"
-});
+// const note = new Note ({
+//     title: "Apple",
+//     content: "the apple is red"
+// });
 
 // fruit.save();
 
@@ -62,18 +62,34 @@ const deleteItem = (id) => {
 };
 
 router.get("/", function(req, res, next) {
-    res.json(notes);
+    Note.find({}, function(err, foundNotes){
+        console.log(foundNotes);
+        res.json(foundNotes);
+    })
 });
 
 router.post("/", function(req, res){
-    console.log(req.body);
     console.log("Post request recieved.");
+    console.log(req.body.newNote);
+    let note = new Note ({
+        title: req.body.newNote.title,
+        content: req.body.newNote.content
+    });
+    note.save();
+    Note.find({}, function(err, foundNotes){
+        console.log(foundNotes);
+        res.json(foundNotes);
+    })
 })
 
 router.post("/delete", function(req, res){
-    console.log(req.body);
     console.log("Delete request recieved.");
+    console.log(req.body)
     deleteItem(req.body.id);
+    Note.find({}, function(err, foundNotes){
+        console.log(foundNotes);
+        res.json(foundNotes);
+    })
 })
 
 module.exports = router;
